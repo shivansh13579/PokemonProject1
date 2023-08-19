@@ -1,4 +1,9 @@
 .pokemon-wrapper{
-    margin-top:20px ;
-    font-size: larger;
+    margin: 2rem auto ;
+}
+
+.pokemon-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
