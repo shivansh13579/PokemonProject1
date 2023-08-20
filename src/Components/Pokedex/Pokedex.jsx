@@ -5,16 +5,14 @@ import './Pokedex.css';
 function Pokedex(){
     
     return (
-        <>
+        
         <div className="pokedex-wrapper">
-        <div className="name-wrapper">pokedex</div>        
+        <h1 className="name-wrapper">pokedex</h1>        
         <Search/>
         <PokemonList/>
         </div>
-       
 
-        </>
-    )
+           )
 }
 
 export default Pokedex;

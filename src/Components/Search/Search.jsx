@@ -2,7 +2,12 @@ import './Search.css'
 function Search (){
      return(
         <div className="search-wrapper">
-            <input className="text-wrapper" type="text" placeholder="search-pokemon..." />
+            <input 
+            id='pokemon-name-search' 
+            type="text" 
+            placeholder="search-pokemon..." 
+
+            />
         </div>
      )
 }
