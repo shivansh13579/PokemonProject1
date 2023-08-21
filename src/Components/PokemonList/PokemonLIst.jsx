@@ -6,20 +6,29 @@ import Pokemon from "../Pokemon/Pokemon";
 
 function PokemonList(){
 
-    const [PokemonList,setPokemonList] = useState([]);
+    const [pokemonList,setPokemonList] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
     const [pokedexUrl,setPokedexUrl] = useState('https://pokeapi.co/api/v2/pokemon');
     const [nextUrl,setNextUrl] = useState('');
     const [prevUrl,setPrevUrl] = useState('');
 
+    const [pokemonListState,setPokemonListState] = useState({
+        pokemonList:[],
+        isLoading:true,
+        pokedexUrl:'https://pokeapi.co/api/v2/pokemon',
+        nextUrl:'',
+        prevUrl:''
+    })
+
     async function downloadPokemons(){
-        const response = await axios.get(pokedexUrl); //this download the 20 pokemon
+        setPokemonListState({...pokemonListState,isLoading:true})
+        const response = await axios.get(pokemonListState.pokedexUrl); //this download the 20 pokemon
 
         const pokemonResult = response.data.results;  //we get the array of pokemons from url
 
         console.log(response.data);
-        setNextUrl(response.data.next);
-        setPrevUrl(response.data.previous);
+        setPokemonListState({...pokemonListState,nextUrl:response.data.next,prevUrl:response.data.previous});
+    
        //ittarating the array of pokemon and using their url to create the array of promise
        //that will download the 20 pokemon
         const pokemonResultPromise = pokemonResult.map((pokemon)=>axios.get(pokemon.url));
@@ -39,7 +48,7 @@ function PokemonList(){
             }
          })
          console.log(pokeListResult);
-         setPokemonList(pokeListResult);
+         setPokemonListState({...pokemonListState,pokemonList:pokeListResult,isLoading:false});
         setIsLoading(false);
 
     }
@@ -51,7 +60,7 @@ function PokemonList(){
         <div className="pokemon-list-wrapper">
         <div className="pokemon-wrapper">
             {(isLoading) ? 'Loading' : 
-            PokemonList.map((p)=><Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/> )}
+            pokemonList.map((p)=><Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/> )}
         </div>
         <div className="controls">
             <button disabled={prevUrl==null} onClick={()=>setPokedexUrl(prevUrl)}>Prev</button>
