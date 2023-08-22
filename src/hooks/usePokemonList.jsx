@@ -44,9 +44,8 @@ function usePokemonList() {
             ? pokemon.sprites.other.home.front_default
             : pokemon.sprites.other.home.front_shiny,
           types: pokemon.types,
-        };
+        }
       });
-      console.log(pokeListResult);
       setPokemonListState((state) => ({
         ...state,
         pokemonList: pokeListResult,
@@ -59,7 +58,7 @@ function usePokemonList() {
     downloadPokemons();
   }, [pokemonListState.pokedexUrl]);
 
-  return { pokemonListState, setPokemonListState };
+  return [pokemonListState, setPokemonListState];
 }
 
 export default usePokemonList;

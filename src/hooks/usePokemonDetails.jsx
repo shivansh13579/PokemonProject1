@@ -3,11 +3,17 @@ import {useEffect, useState } from "react";
 import usePokemonList from "./usePokemonList";
 
 
-function usePokemonDetails(id){
+function usePokemonDetails(id,pokemonName){
     const [pokemon, setPokemon] = useState({});
     async function downloadPokemon() {
+      let response;
+      if(pokemonName){
+           response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+      }else{
+        response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      }
       
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+     
       const pokemonOfSameTypes = await axios.get(`https://pokeapi.co/api/v2/type/${response.data.types ? response.data.types[0].type.name:''}`);
       
       setPokemon({
@@ -18,8 +24,8 @@ function usePokemonDetails(id){
         types: response.data.types.map((t) => t.type.name),
         similarPokemons: pokemonOfSameTypes.data.pokemon
       });
-      console.log(response.data.types)
-      setPokemonListState({...pokemonListState,type : response.data.types ? response.data.types[0].type.name:''})
+      console.log(response.data.types);
+      setPokemonListState({...pokemonListState, type: response.data.types ? response.data.types[0].type.name:''})
 }
 
 const [pokemonListState,setPokemonListState]=usePokemonList();
