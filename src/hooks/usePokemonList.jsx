@@ -7,8 +7,7 @@ function usePokemonList() {
     isLoading: true,
     pokedexUrl: 'https://pokeapi.co/api/v2/pokemon',
     nextUrl: "",
-    prevUrl: "",
-    type: ''
+    prevUrl: ""
   });
 
   async function downloadPokemons() {
